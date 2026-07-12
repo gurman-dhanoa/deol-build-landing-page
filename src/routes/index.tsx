@@ -333,50 +333,45 @@ function Stats() {
 
 function Philosophy() {
   const pillars = [
-    { k: "01", t: "Client first", d: "Your brief leads. Every decision returns to your family, your rhythm, your life." },
-    { k: "02", t: "Budget honest", d: "Fixed pricing, no surprise variations. If we say a number, we hold to it." },
-    { k: "03", t: "Quality obsessed", d: "Materials, joinery, finish — held to a standard we sign our name to." },
-    { k: "04", t: "Always improving", d: "Every project is measured against the last. The bar only moves one way." },
+    { Icon: HeartHandshake, t: "Client first" },
+    { Icon: Wallet, t: "Budget honest" },
+    { Icon: Gem, t: "Quality obsessed" },
+    { Icon: TrendingUp, t: "Always better" },
   ];
   return (
     <section id="philosophy" className="bg-background">
       <div className="mx-auto max-w-[1400px] px-6 py-24 md:px-10 md:py-40">
-        <div className="grid grid-cols-1 gap-16 md:grid-cols-12 md:gap-12">
-          <div className="md:col-span-5">
-            <p className="eyebrow mb-6">Our Philosophy</p>
-            <h2 className="font-display text-4xl leading-tight md:text-6xl">
-              Built around<br />the people who<br />live inside.
-            </h2>
-            <div className="mt-10 overflow-hidden rounded-sm">
+        <div className="mb-16 max-w-3xl md:mb-24">
+          <p className="eyebrow mb-6">Our Philosophy</p>
+          <h2 className="font-display text-4xl leading-tight md:text-6xl">
+            Built around<br />the people who<br />live inside.
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-12">
+          <div className="md:col-span-7">
+            <div className="overflow-hidden rounded-sm">
               <img
                 src={philosophyImg}
-                alt="Deol Build team reviewing plans on site"
+                alt="Deol Build team on site"
                 loading="lazy"
-                width={1400}
-                height={1700}
-                className="h-[520px] w-full object-cover"
+                className="h-[420px] w-full object-cover md:h-[620px]"
               />
             </div>
           </div>
 
-          <div className="md:col-span-6 md:col-start-7 md:pt-20">
-            <p className="text-lg font-light leading-relaxed text-ink-soft">
-              We rebranded from Punjab Homes to Deol Build not to leave anything
-              behind — but to sharpen what we have always stood for. Homes made
-              with patience. Numbers you can trust. A team that shows up.
-            </p>
-
-            <div className="mt-16 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2">
-              {pillars.map((p) => (
-                <div key={p.k} className="flex flex-col gap-4">
-                  <span className="text-xs num-tabular text-ink-mute">{p.k}</span>
-                  <h3 className="font-display text-2xl">{p.t}</h3>
-                  <p className="text-sm font-light leading-relaxed text-ink-mute">
-                    {p.d}
-                  </p>
-                </div>
-              ))}
-            </div>
+          <div className="grid grid-cols-2 gap-px overflow-hidden bg-line md:col-span-5">
+            {pillars.map(({ Icon, t }) => (
+              <div
+                key={t}
+                className="flex aspect-square flex-col justify-between bg-background p-6 md:p-8"
+              >
+                <Icon strokeWidth={1} className="h-8 w-8 text-accent md:h-10 md:w-10" />
+                <h3 className="font-display text-xl leading-tight md:text-2xl">
+                  {t}
+                </h3>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -388,62 +383,47 @@ function Philosophy() {
 
 function Process() {
   const steps = [
-    { n: "01", t: "Listen", d: "We sit with you before we sketch. Brief, budget, land, life." },
-    { n: "02", t: "Design", d: "Concept to construction drawings, refined until every detail is intentional." },
-    { n: "03", t: "Price", d: "Line-item transparency. Fixed contract. No hidden margins." },
-    { n: "04", t: "Build", d: "One site supervisor, weekly walk-throughs, photo journal every Friday." },
-    { n: "05", t: "Inspect", d: "Three independent quality gates before you ever see a snag list." },
-    { n: "06", t: "Handover", d: "Keys, warranties, a 12-month care plan and a builder who still picks up." },
+    { n: "01", Icon: Ear, t: "Listen" },
+    { n: "02", Icon: PenTool, t: "Design" },
+    { n: "03", Icon: Calculator, t: "Price" },
+    { n: "04", Icon: Hammer, t: "Build" },
+    { n: "05", Icon: ShieldCheck, t: "Inspect" },
+    { n: "06", Icon: KeyRound, t: "Handover" },
   ];
   return (
     <section id="process" className="bg-surface-2">
       <div className="mx-auto max-w-[1400px] px-6 py-24 md:px-10 md:py-40">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
-          <div className="md:col-span-4">
+        <div className="mb-16 flex flex-col gap-6 md:mb-24 md:flex-row md:items-end md:justify-between">
+          <div>
             <p className="eyebrow mb-6">The Process</p>
-            <h2 className="font-display text-4xl leading-tight md:text-5xl">
+            <h2 className="font-display text-4xl leading-tight md:text-6xl">
               Six stages.<br />One standard.
             </h2>
-            <p className="mt-6 max-w-sm text-sm font-light text-ink-soft">
-              Quality is a system, not a promise. Here is how we keep the
-              standard from concept to keys.
-            </p>
-          </div>
-
-          <div className="md:col-span-8">
-            <ul className="flex flex-col">
-              {steps.map((s, i) => (
-                <li
-                  key={s.n}
-                  className={`group grid grid-cols-[auto_1fr_auto] items-center gap-6 py-7 md:gap-10 md:py-8 ${
-                    i !== 0 ? "border-t border-line" : ""
-                  }`}
-                >
-                  <span className="num-tabular text-xs text-ink-mute">{s.n}</span>
-                  <div className="min-w-0">
-                    <h3 className="font-display text-2xl md:text-3xl">{s.t}</h3>
-                    <p className="mt-2 text-sm font-light text-ink-mute">
-                      {s.d}
-                    </p>
-                  </div>
-                  <Plus
-                    strokeWidth={1}
-                    className="h-6 w-6 shrink-0 text-ink-mute transition group-hover:rotate-90 group-hover:text-accent"
-                  />
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
 
-        <div className="mt-20 overflow-hidden rounded-sm">
+        <div className="grid grid-cols-2 gap-px overflow-hidden bg-line md:grid-cols-3 md:grid-cols-6">
+          {steps.map(({ n, Icon, t }) => (
+            <div
+              key={n}
+              className="group flex aspect-square flex-col justify-between bg-surface-2 p-6 transition hover:bg-background md:p-8"
+            >
+              <span className="num-tabular text-xs text-ink-mute">{n}</span>
+              <Icon
+                strokeWidth={1}
+                className="h-10 w-10 self-center text-ink transition group-hover:text-accent md:h-14 md:w-14"
+              />
+              <h3 className="font-display text-lg md:text-xl">{t}</h3>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-16 overflow-hidden rounded-sm md:mt-24">
           <img
             src={craftHands}
             alt="Craftsman laying timber flooring"
             loading="lazy"
-            width={1400}
-            height={1000}
-            className="h-[380px] w-full object-cover md:h-[520px]"
+            className="h-[320px] w-full object-cover md:h-[560px]"
           />
         </div>
       </div>
