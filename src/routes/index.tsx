@@ -251,16 +251,21 @@ function Hero() {
         muted
         loop
         playsInline
+        preload="auto"
         poster={heroPoster}
       >
         <source
-          src="https://videos.pexels.com/video-files/2887463/2887463-uhd_2560_1440_24fps.mp4"
+          src="https://videos.pexels.com/video-files/7578540/7578540-hd_1920_1080_25fps.mp4"
+          type="video/mp4"
+        />
+        <source
+          src="https://videos.pexels.com/video-files/4488669/4488669-hd_1920_1080_25fps.mp4"
           type="video/mp4"
         />
       </video>
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-black/50" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/60" />
 
-      <div className="relative z-10 mx-auto flex h-full max-w-[1400px] flex-col justify-between px-6 pb-16 pt-28 md:px-10 md:pb-24 md:pt-40">
+      <div className="relative z-10 mx-auto flex h-full max-w-[1400px] flex-col justify-between px-6 pb-16 pt-28 md:px-10 md:pb-20 md:pt-40">
         <div className="animate-reveal flex items-baseline gap-3 text-white">
           <span className="font-display text-3xl tracking-tight md:text-4xl">
             Deol
@@ -271,30 +276,22 @@ function Hero() {
           </span>
         </div>
 
-        <div className="animate-reveal max-w-4xl text-white">
-          <p className="mb-6 text-xs uppercase tracking-[0.32em] text-white/70">
-            Formerly Punjab Homes · Est. 2010
-          </p>
-          <h1 className="font-display text-[clamp(2.75rem,7vw,6.5rem)] leading-[1.02] tracking-tight text-white">
-            Homes built<br />
-            <em className="not-italic text-white/70">the honest way.</em>
+        <div className="animate-reveal flex items-end justify-between gap-8">
+          <h1 className="font-display text-[clamp(2.5rem,7vw,6rem)] leading-[1.02] tracking-tight text-white">
+            Built honest.<br />
+            <em className="not-italic text-white/70">Built to last.</em>
           </h1>
 
-          <div className="mt-12 flex flex-wrap items-end justify-between gap-8">
-            <p className="max-w-md text-base font-light leading-relaxed text-white/80">
-              Fifteen years, five hundred homes, one standard —
-              every project better than the last.
-            </p>
-            <a
-              href="#projects"
-              className="group inline-flex items-center gap-3 text-sm uppercase tracking-[0.24em] text-white"
-            >
-              <span>View our work</span>
-              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/50 transition group-hover:bg-white group-hover:text-ink">
-                <ArrowRight strokeWidth={1} className="h-4 w-4" />
-              </span>
-            </a>
-          </div>
+          <a
+            href="#projects"
+            aria-label="View our work"
+            className="group hidden shrink-0 items-center gap-3 text-xs uppercase tracking-[0.24em] text-white md:inline-flex"
+          >
+            <span>Our work</span>
+            <span className="flex h-11 w-11 items-center justify-center rounded-full border border-white/50 transition group-hover:bg-white group-hover:text-ink">
+              <ArrowRight strokeWidth={1} className="h-4 w-4" />
+            </span>
+          </a>
         </div>
       </div>
     </section>
