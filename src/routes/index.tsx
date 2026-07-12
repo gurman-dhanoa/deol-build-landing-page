@@ -1,24 +1,868 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import {
+  Plus,
+  ArrowUpRight,
+  ArrowRight,
+  Minus,
+  Mail,
+  Phone,
+  MapPin,
+  Instagram,
+  Facebook,
+  Linkedin,
+} from "lucide-react";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import heroPoster from "@/assets/hero-poster.jpg";
+import project1 from "@/assets/project-1.jpg";
+import project2 from "@/assets/project-2.jpg";
+import project3 from "@/assets/project-3.jpg";
+import project4 from "@/assets/project-4.jpg";
+import craftHands from "@/assets/craft-hands.jpg";
+import philosophyImg from "@/assets/philosophy.jpg";
+
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { property: "og:image", content: "https://images.deolbuild.com.au/og.jpg" },
+    ],
+  }),
+  component: Landing,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+const NAV = [
+  { label: "Home", href: "#top" },
+  { label: "Philosophy", href: "#philosophy" },
+  { label: "Process", href: "#process" },
+  { label: "Services", href: "#services" },
+  { label: "Projects", href: "#projects" },
+  { label: "Testimonials", href: "#testimonials" },
+  { label: "FAQ", href: "#faq" },
+  { label: "Contact", href: "#contact" },
+];
+
+function Wordmark({ className = "" }: { className?: string }) {
+  return (
+    <div className={`flex items-baseline gap-2 ${className}`}>
+      <span className="font-display text-xl tracking-tight">Deol</span>
+      <span className="h-1 w-1 rounded-full bg-accent" />
+      <span className="font-sans text-[0.7rem] uppercase tracking-[0.28em] text-ink-soft">
+        Build
+      </span>
+    </div>
+  );
+}
+
+function Landing() {
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 80);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
+  return (
+    <div id="top" className="bg-background text-foreground">
+      <FloatingHeader
+        scrolled={scrolled}
+        onMenu={() => setMenuOpen(true)}
+      />
+      <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
+
+      <Hero />
+      <Stats />
+      <Philosophy />
+      <Process />
+      <Services />
+      <Projects />
+      <Testimonials />
+      <FAQ />
+      <Contact />
+      <Footer />
+    </div>
+  );
+}
+
+/* ---------------- Header ---------------- */
+
+function FloatingHeader({
+  scrolled,
+  onMenu,
+}: {
+  scrolled: boolean;
+  onMenu: () => void;
+}) {
+  return (
+    <header className="fixed inset-x-0 top-0 z-40">
+      <div
+        className={`transition-all duration-500 ${
+          scrolled
+            ? "bg-background/85 backdrop-blur-md border-b border-line"
+            : "bg-transparent"
+        }`}
+      >
+        <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-5 md:px-10">
+          <div
+            className={`transition-all duration-500 ${
+              scrolled
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 -translate-y-2 pointer-events-none"
+            }`}
+          >
+            <Wordmark />
+          </div>
+          <button
+            onClick={onMenu}
+            aria-label="Open menu"
+            className={`group flex items-center gap-3 rounded-full border px-4 py-2 text-xs uppercase tracking-[0.24em] transition-all duration-500 ${
+              scrolled
+                ? "border-ink/20 text-ink hover:bg-ink hover:text-background"
+                : "border-white/50 text-white hover:bg-white hover:text-ink"
+            }`}
+          >
+            <span>Menu</span>
+            <span className="flex flex-col gap-[3px]">
+              <span className="block h-px w-4 bg-current" />
+              <span className="block h-px w-4 bg-current" />
+            </span>
+          </button>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+function MenuOverlay({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
   return (
     <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
+      className={`fixed inset-0 z-50 transition-all duration-500 ${
+        open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+      }`}
     >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
+      <div
+        className="absolute inset-0 bg-background"
+        onClick={onClose}
+      />
+      <div
+        className={`relative h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          open ? "translate-y-0" : "-translate-y-full"
+        }`}
+      >
+        <div className="mx-auto flex h-full max-w-[1400px] flex-col px-6 md:px-10">
+          <div className="flex items-center justify-between py-5">
+            <Wordmark />
+            <button
+              onClick={onClose}
+              aria-label="Close menu"
+              className="rounded-full border border-ink/20 px-4 py-2 text-xs uppercase tracking-[0.24em] transition hover:bg-ink hover:text-background"
+            >
+              Close
+            </button>
+          </div>
+
+          <div className="mt-6 grid flex-1 grid-cols-1 gap-16 pb-16 md:grid-cols-[1fr_1fr] md:pb-24">
+            <nav className="flex flex-col justify-center">
+              <p className="eyebrow mb-8">Navigate</p>
+              <ul className="flex flex-col gap-2">
+                {NAV.map((item, i) => (
+                  <li key={item.label}>
+                    <a
+                      href={item.href}
+                      onClick={onClose}
+                      className="group flex items-baseline gap-6 py-2"
+                    >
+                      <span className="w-10 num-tabular text-xs text-ink-mute">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="font-display text-4xl leading-none text-ink transition-all group-hover:translate-x-2 group-hover:text-accent md:text-6xl">
+                        {item.label}
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <div className="hidden flex-col justify-end gap-8 md:flex">
+              <div className="hairline" />
+              <div className="grid grid-cols-2 gap-8 text-sm">
+                <div>
+                  <p className="eyebrow mb-3">Studio</p>
+                  <p className="text-ink-soft">
+                    41 Foundry Lane<br />
+                    Melbourne VIC 3000<br />
+                    Australia
+                  </p>
+                </div>
+                <div>
+                  <p className="eyebrow mb-3">Enquire</p>
+                  <p className="text-ink-soft">
+                    hello@deolbuild.com.au<br />
+                    +61 3 9000 0000
+                  </p>
+                </div>
+              </div>
+              <div className="hairline" />
+              <p className="text-xs text-ink-mute">
+                Formerly Punjab Homes — 15 years of craft, 500+ homes delivered.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------------- Hero ---------------- */
+
+function Hero() {
+  return (
+    <section className="relative h-[100svh] w-full overflow-hidden">
+      <video
+        className="absolute inset-0 h-full w-full object-cover animate-drift"
+        autoPlay
+        muted
+        loop
+        playsInline
+        poster={heroPoster}
+      >
+        <source
+          src="https://videos.pexels.com/video-files/2887463/2887463-uhd_2560_1440_24fps.mp4"
+          type="video/mp4"
+        />
+      </video>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-black/50" />
+
+      <div className="relative z-10 mx-auto flex h-full max-w-[1400px] flex-col justify-between px-6 pb-16 pt-28 md:px-10 md:pb-24 md:pt-40">
+        <div className="animate-reveal flex items-baseline gap-3 text-white">
+          <span className="font-display text-3xl tracking-tight md:text-4xl">
+            Deol
+          </span>
+          <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+          <span className="text-xs uppercase tracking-[0.32em] text-white/80">
+            Build
+          </span>
+        </div>
+
+        <div className="animate-reveal max-w-4xl text-white">
+          <p className="mb-6 text-xs uppercase tracking-[0.32em] text-white/70">
+            Formerly Punjab Homes · Est. 2010
+          </p>
+          <h1 className="font-display text-[clamp(2.75rem,7vw,6.5rem)] leading-[1.02] tracking-tight text-white">
+            Homes built<br />
+            <em className="not-italic text-white/70">the honest way.</em>
+          </h1>
+
+          <div className="mt-12 flex flex-wrap items-end justify-between gap-8">
+            <p className="max-w-md text-base font-light leading-relaxed text-white/80">
+              Fifteen years, five hundred homes, one standard —
+              every project better than the last.
+            </p>
+            <a
+              href="#projects"
+              className="group inline-flex items-center gap-3 text-sm uppercase tracking-[0.24em] text-white"
+            >
+              <span>View our work</span>
+              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/50 transition group-hover:bg-white group-hover:text-ink">
+                <ArrowRight strokeWidth={1} className="h-4 w-4" />
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Stats ---------------- */
+
+function Stats() {
+  const items = [
+    { n: "15", u: "Years", d: "of continuous craft" },
+    { n: "500+", u: "Homes", d: "delivered across Australia" },
+    { n: "98%", u: "On-time", d: "handover, every quarter" },
+    { n: "12", u: "Trades", d: "under one roof" },
+  ];
+  return (
+    <section className="bg-surface-1">
+      <div className="mx-auto max-w-[1400px] px-6 py-24 md:px-10 md:py-32">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-16 md:grid-cols-4 md:gap-x-12">
+          {items.map((it) => (
+            <div key={it.u} className="flex flex-col gap-3">
+              <div className="hairline w-10" />
+              <div className="font-display text-5xl leading-none text-ink num-tabular md:text-7xl">
+                {it.n}
+              </div>
+              <div className="mt-2 text-sm uppercase tracking-[0.22em] text-ink-soft">
+                {it.u}
+              </div>
+              <div className="text-sm font-light text-ink-mute">{it.d}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Philosophy ---------------- */
+
+function Philosophy() {
+  const pillars = [
+    { k: "01", t: "Client first", d: "Your brief leads. Every decision returns to your family, your rhythm, your life." },
+    { k: "02", t: "Budget honest", d: "Fixed pricing, no surprise variations. If we say a number, we hold to it." },
+    { k: "03", t: "Quality obsessed", d: "Materials, joinery, finish — held to a standard we sign our name to." },
+    { k: "04", t: "Always improving", d: "Every project is measured against the last. The bar only moves one way." },
+  ];
+  return (
+    <section id="philosophy" className="bg-background">
+      <div className="mx-auto max-w-[1400px] px-6 py-24 md:px-10 md:py-40">
+        <div className="grid grid-cols-1 gap-16 md:grid-cols-12 md:gap-12">
+          <div className="md:col-span-5">
+            <p className="eyebrow mb-6">Our Philosophy</p>
+            <h2 className="font-display text-4xl leading-tight md:text-6xl">
+              Built around<br />the people who<br />live inside.
+            </h2>
+            <div className="mt-10 overflow-hidden rounded-sm">
+              <img
+                src={philosophyImg}
+                alt="Deol Build team reviewing plans on site"
+                loading="lazy"
+                width={1400}
+                height={1700}
+                className="h-[520px] w-full object-cover"
+              />
+            </div>
+          </div>
+
+          <div className="md:col-span-6 md:col-start-7 md:pt-20">
+            <p className="text-lg font-light leading-relaxed text-ink-soft">
+              We rebranded from Punjab Homes to Deol Build not to leave anything
+              behind — but to sharpen what we have always stood for. Homes made
+              with patience. Numbers you can trust. A team that shows up.
+            </p>
+
+            <div className="mt-16 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2">
+              {pillars.map((p) => (
+                <div key={p.k} className="flex flex-col gap-4">
+                  <span className="text-xs num-tabular text-ink-mute">{p.k}</span>
+                  <h3 className="font-display text-2xl">{p.t}</h3>
+                  <p className="text-sm font-light leading-relaxed text-ink-mute">
+                    {p.d}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Process ---------------- */
+
+function Process() {
+  const steps = [
+    { n: "01", t: "Listen", d: "We sit with you before we sketch. Brief, budget, land, life." },
+    { n: "02", t: "Design", d: "Concept to construction drawings, refined until every detail is intentional." },
+    { n: "03", t: "Price", d: "Line-item transparency. Fixed contract. No hidden margins." },
+    { n: "04", t: "Build", d: "One site supervisor, weekly walk-throughs, photo journal every Friday." },
+    { n: "05", t: "Inspect", d: "Three independent quality gates before you ever see a snag list." },
+    { n: "06", t: "Handover", d: "Keys, warranties, a 12-month care plan and a builder who still picks up." },
+  ];
+  return (
+    <section id="process" className="bg-surface-2">
+      <div className="mx-auto max-w-[1400px] px-6 py-24 md:px-10 md:py-40">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
+          <div className="md:col-span-4">
+            <p className="eyebrow mb-6">The Process</p>
+            <h2 className="font-display text-4xl leading-tight md:text-5xl">
+              Six stages.<br />One standard.
+            </h2>
+            <p className="mt-6 max-w-sm text-sm font-light text-ink-soft">
+              Quality is a system, not a promise. Here is how we keep the
+              standard from concept to keys.
+            </p>
+          </div>
+
+          <div className="md:col-span-8">
+            <ul className="flex flex-col">
+              {steps.map((s, i) => (
+                <li
+                  key={s.n}
+                  className={`group grid grid-cols-[auto_1fr_auto] items-center gap-6 py-7 md:gap-10 md:py-8 ${
+                    i !== 0 ? "border-t border-line" : ""
+                  }`}
+                >
+                  <span className="num-tabular text-xs text-ink-mute">{s.n}</span>
+                  <div className="min-w-0">
+                    <h3 className="font-display text-2xl md:text-3xl">{s.t}</h3>
+                    <p className="mt-2 text-sm font-light text-ink-mute">
+                      {s.d}
+                    </p>
+                  </div>
+                  <Plus
+                    strokeWidth={1}
+                    className="h-6 w-6 shrink-0 text-ink-mute transition group-hover:rotate-90 group-hover:text-accent"
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-20 overflow-hidden rounded-sm">
+          <img
+            src={craftHands}
+            alt="Craftsman laying timber flooring"
+            loading="lazy"
+            width={1400}
+            height={1000}
+            className="h-[380px] w-full object-cover md:h-[520px]"
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Services ---------------- */
+
+function Services() {
+  const services = [
+    { n: "01", t: "Custom Homes", d: "One-off residences designed and delivered end-to-end." },
+    { n: "02", t: "Knockdown Rebuild", d: "Replace what no longer serves — keep the postcode you love." },
+    { n: "03", t: "Major Renovations", d: "Structural extensions, second storeys, whole-home reworks." },
+    { n: "04", t: "Luxury Multi-Res", d: "Duplexes and small-scale developments with private-home finish." },
+  ];
+  return (
+    <section id="services" className="bg-surface-3">
+      <div className="mx-auto max-w-[1400px] px-6 py-24 md:px-10 md:py-40">
+        <div className="mb-16 flex items-end justify-between gap-8 md:mb-24">
+          <div>
+            <p className="eyebrow mb-6">Services</p>
+            <h2 className="font-display text-4xl leading-tight md:text-6xl">
+              What we build.
+            </h2>
+          </div>
+          <a
+            href="#contact"
+            className="hidden items-center gap-3 text-sm uppercase tracking-[0.24em] text-ink hover:text-accent md:inline-flex"
+          >
+            Enquire
+            <ArrowUpRight strokeWidth={1} className="h-5 w-5" />
+          </a>
+        </div>
+
+        <div className="grid grid-cols-1 gap-px overflow-hidden bg-line md:grid-cols-2">
+          {services.map((s) => (
+            <div
+              key={s.n}
+              className="group relative flex min-h-[280px] flex-col justify-between bg-surface-3 p-10 transition hover:bg-surface-1 md:p-14"
+            >
+              <span className="num-tabular text-xs text-ink-mute">{s.n}</span>
+              <div>
+                <h3 className="font-display text-3xl md:text-4xl">{s.t}</h3>
+                <p className="mt-4 max-w-sm text-sm font-light text-ink-soft">
+                  {s.d}
+                </p>
+                <div className="mt-8 flex items-center gap-2 text-xs uppercase tracking-[0.24em] text-ink-mute transition group-hover:text-accent">
+                  <span>Learn more</span>
+                  <ArrowRight strokeWidth={1} className="h-4 w-4" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Projects ---------------- */
+
+function Projects() {
+  const items = [
+    { img: project1, t: "Byron Ridge House", loc: "Byron Bay, NSW", y: "2024", ratio: "aspect-[4/5]" },
+    { img: project2, t: "Fitzroy Kitchen", loc: "Melbourne, VIC", y: "2024", ratio: "aspect-[5/4]" },
+    { img: project3, t: "Spiral Residence", loc: "Adelaide Hills, SA", y: "2023", ratio: "aspect-[4/5]" },
+    { img: project4, t: "Bushland Pavilion", loc: "Perth, WA", y: "2023", ratio: "aspect-[16/10]" },
+  ];
+  return (
+    <section id="projects" className="bg-background">
+      <div className="mx-auto max-w-[1400px] px-6 py-24 md:px-10 md:py-40">
+        <div className="mb-16 grid grid-cols-1 gap-6 md:grid-cols-12 md:mb-24">
+          <div className="md:col-span-8">
+            <p className="eyebrow mb-6">Featured Projects</p>
+            <h2 className="font-display text-4xl leading-tight md:text-6xl">
+              A quiet catalogue<br />of finished homes.
+            </h2>
+          </div>
+          <div className="flex items-end md:col-span-4 md:justify-end">
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-3 text-sm uppercase tracking-[0.24em] text-ink hover:text-accent"
+            >
+              All projects
+              <ArrowUpRight strokeWidth={1} className="h-5 w-5" />
+            </a>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-x-8 gap-y-20 md:grid-cols-12">
+          {items.map((p, i) => (
+            <figure
+              key={p.t}
+              className={`${
+                i === 0
+                  ? "md:col-span-6"
+                  : i === 1
+                  ? "md:col-span-5 md:col-start-8 md:mt-32"
+                  : i === 2
+                  ? "md:col-span-5"
+                  : "md:col-span-7 md:col-start-6"
+              }`}
+            >
+              <div className={`overflow-hidden rounded-sm ${p.ratio}`}>
+                <img
+                  src={p.img}
+                  alt={p.t}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition duration-[1200ms] hover:scale-[1.03]"
+                />
+              </div>
+              <figcaption className="mt-6 flex items-baseline justify-between gap-4">
+                <div>
+                  <h3 className="font-display text-2xl">{p.t}</h3>
+                  <p className="mt-1 text-sm text-ink-mute">{p.loc}</p>
+                </div>
+                <span className="num-tabular text-xs text-ink-mute">{p.y}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Testimonials ---------------- */
+
+function Testimonials() {
+  const items = [
+    {
+      q: "They quoted a number and held it. In fifteen years of building, we have never known that.",
+      n: "Andrea & Marc",
+      p: "Custom Home, Brighton VIC",
+    },
+    {
+      q: "Every Friday, photos. Every Wednesday, a call. We always knew where our home was.",
+      n: "The Nguyen Family",
+      p: "Knockdown Rebuild, Parramatta NSW",
+    },
+    {
+      q: "The finish is quiet but it is everywhere. The kind of quality you feel a year later.",
+      n: "Priya S.",
+      p: "Major Renovation, Adelaide SA",
+    },
+  ];
+  return (
+    <section id="testimonials" className="bg-surface-2">
+      <div className="mx-auto max-w-[1400px] px-6 py-24 md:px-10 md:py-40">
+        <p className="eyebrow mb-6">In their words</p>
+        <h2 className="mb-20 max-w-3xl font-display text-4xl leading-tight md:text-6xl">
+          Fifteen years of clients.<br />
+          <em className="not-italic text-ink-mute">One recurring word — trust.</em>
+        </h2>
+
+        <div className="grid grid-cols-1 gap-px overflow-hidden bg-line md:grid-cols-3">
+          {items.map((t, i) => (
+            <blockquote
+              key={i}
+              className="flex flex-col justify-between gap-10 bg-surface-2 p-10 md:p-12"
+            >
+              <p className="font-display text-2xl leading-snug text-ink md:text-3xl">
+                “{t.q}”
+              </p>
+              <footer>
+                <div className="hairline mb-4 w-8" />
+                <div className="text-sm text-ink">{t.n}</div>
+                <div className="text-xs text-ink-mute">{t.p}</div>
+              </footer>
+            </blockquote>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- FAQ ---------------- */
+
+function FAQItem({
+  q,
+  a,
+  index,
+}: {
+  q: string;
+  a: string;
+  index: string;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <li className="border-t border-line">
+      <button
+        onClick={() => setOpen(!open)}
+        className="grid w-full grid-cols-[auto_1fr_auto] items-center gap-6 py-7 text-left md:gap-10"
+      >
+        <span className="num-tabular text-xs text-ink-mute">{index}</span>
+        <span className="font-display text-xl md:text-2xl">{q}</span>
+        {open ? (
+          <Minus strokeWidth={1} className="h-5 w-5 text-ink-mute" />
+        ) : (
+          <Plus strokeWidth={1} className="h-5 w-5 text-ink-mute" />
+        )}
+      </button>
+      <div
+        className={`grid transition-all duration-500 ease-out ${
+          open ? "grid-rows-[1fr] opacity-100 pb-8" : "grid-rows-[0fr] opacity-0"
+        }`}
+      >
+        <div className="overflow-hidden">
+          <p className="max-w-2xl pl-16 pr-8 text-sm font-light leading-relaxed text-ink-soft md:pl-20">
+            {a}
+          </p>
+        </div>
+      </div>
+    </li>
+  );
+}
+
+function FAQ() {
+  const qs = [
+    { q: "Where do you build?", a: "Across metro and regional Australia, with active sites in VIC, NSW, SA, and WA. We travel for the right project." },
+    { q: "How is Deol Build different from Punjab Homes?", a: "Same family, same builders, same standard — sharper name. Deol Build is our rebrand after fifteen years and five hundred homes. Every warranty and relationship carries over." },
+    { q: "Do you work to a fixed price?", a: "Yes. Every contract is fixed after design lock. We publish a line-item breakdown so you can see exactly what you are paying for." },
+    { q: "What is a typical build timeline?", a: "Custom homes usually run 10–14 months from site handover. Renovations vary from 4 to 9 months. We publish a Gantt chart at contract signing." },
+    { q: "Can you work with our architect?", a: "Absolutely. Roughly half our projects come through architect referrals. We are comfortable joining an existing design team or leading the design ourselves." },
+  ];
+  return (
+    <section id="faq" className="bg-background">
+      <div className="mx-auto max-w-[1400px] px-6 py-24 md:px-10 md:py-40">
+        <div className="grid grid-cols-1 gap-16 md:grid-cols-12">
+          <div className="md:col-span-4">
+            <p className="eyebrow mb-6">Questions</p>
+            <h2 className="font-display text-4xl leading-tight md:text-5xl">
+              Answered before<br />you have to ask.
+            </h2>
+          </div>
+          <ul className="md:col-span-8">
+            {qs.map((it, i) => (
+              <FAQItem
+                key={it.q}
+                q={it.q}
+                a={it.a}
+                index={String(i + 1).padStart(2, "0")}
+              />
+            ))}
+            <li className="border-t border-line" />
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Contact ---------------- */
+
+function Contact() {
+  return (
+    <section id="contact" className="bg-surface-4">
+      <div className="mx-auto max-w-[1400px] px-6 py-24 md:px-10 md:py-40">
+        <div className="grid grid-cols-1 gap-16 md:grid-cols-12 md:gap-12">
+          <div className="md:col-span-5">
+            <p className="eyebrow mb-6">Enquire</p>
+            <h2 className="font-display text-4xl leading-tight md:text-6xl">
+              Tell us about<br />your build.
+            </h2>
+            <p className="mt-8 max-w-md text-base font-light text-ink-soft">
+              A short note is enough. We reply within one business day, and every
+              first conversation is with a builder — not a salesperson.
+            </p>
+
+            <div className="mt-16 flex flex-col gap-6 text-sm">
+              <div className="flex items-center gap-4">
+                <Mail strokeWidth={1} className="h-5 w-5 text-ink-mute" />
+                <span className="text-ink">hello@deolbuild.com.au</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <Phone strokeWidth={1} className="h-5 w-5 text-ink-mute" />
+                <span className="text-ink">+61 3 9000 0000</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <MapPin strokeWidth={1} className="h-5 w-5 text-ink-mute" />
+                <span className="text-ink">41 Foundry Lane, Melbourne VIC</span>
+              </div>
+            </div>
+          </div>
+
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              alert("Thank you — we'll be in touch within one business day.");
+            }}
+            className="flex flex-col gap-8 md:col-span-6 md:col-start-7"
+          >
+            <Field label="Name" name="name" placeholder="Your full name" />
+            <Field label="Email" name="email" type="email" placeholder="you@domain.com" />
+            <Field label="Phone" name="phone" type="tel" placeholder="+61" />
+            <Field label="Location" name="loc" placeholder="Suburb, state" />
+            <div className="flex flex-col gap-3">
+              <label className="eyebrow">Project</label>
+              <select
+                name="project"
+                className="border-0 border-b border-line bg-transparent py-3 font-sans text-base text-ink outline-none focus:border-accent"
+              >
+                <option>Custom home</option>
+                <option>Knockdown rebuild</option>
+                <option>Major renovation</option>
+                <option>Luxury multi-res</option>
+              </select>
+            </div>
+            <div className="flex flex-col gap-3">
+              <label className="eyebrow">Tell us more</label>
+              <textarea
+                name="msg"
+                rows={4}
+                placeholder="A few lines about your project, timing, and budget"
+                className="resize-none border-0 border-b border-line bg-transparent py-3 font-sans text-base text-ink outline-none placeholder:text-ink-mute focus:border-accent"
+              />
+            </div>
+            <button
+              type="submit"
+              className="group mt-6 inline-flex items-center justify-between gap-3 self-start rounded-full bg-ink px-8 py-4 text-xs uppercase tracking-[0.24em] text-background transition hover:bg-accent"
+            >
+              <span>Send enquiry</span>
+              <ArrowRight
+                strokeWidth={1}
+                className="h-4 w-4 transition group-hover:translate-x-1"
+              />
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Field({
+  label,
+  name,
+  type = "text",
+  placeholder,
+}: {
+  label: string;
+  name: string;
+  type?: string;
+  placeholder?: string;
+}) {
+  return (
+    <div className="flex flex-col gap-3">
+      <label htmlFor={name} className="eyebrow">
+        {label}
+      </label>
+      <input
+        id={name}
+        name={name}
+        type={type}
+        placeholder={placeholder}
+        className="border-0 border-b border-line bg-transparent py-3 font-sans text-base text-ink outline-none placeholder:text-ink-mute focus:border-accent"
       />
     </div>
+  );
+}
+
+/* ---------------- Footer ---------------- */
+
+function Footer() {
+  return (
+    <footer className="bg-ink text-background">
+      <div className="mx-auto max-w-[1400px] px-6 py-20 md:px-10 md:py-24">
+        <div className="grid grid-cols-2 gap-12 md:grid-cols-12">
+          <div className="col-span-2 md:col-span-5">
+            <div className="flex items-baseline gap-2">
+              <span className="font-display text-3xl text-background">Deol</span>
+              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+              <span className="text-xs uppercase tracking-[0.32em] text-background/70">
+                Build
+              </span>
+            </div>
+            <p className="mt-6 max-w-sm text-sm font-light text-background/70">
+              Formerly Punjab Homes. Australian home builders since 2010.
+              Client-first, budget honest, quality obsessed.
+            </p>
+          </div>
+
+          <div className="md:col-span-2">
+            <p className="eyebrow mb-6 text-background/50">Explore</p>
+            <ul className="flex flex-col gap-3 text-sm">
+              {NAV.slice(0, 5).map((n) => (
+                <li key={n.label}>
+                  <a href={n.href} className="text-background/80 hover:text-accent">
+                    {n.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="md:col-span-2">
+            <p className="eyebrow mb-6 text-background/50">Studio</p>
+            <p className="text-sm font-light leading-relaxed text-background/70">
+              41 Foundry Lane<br />
+              Melbourne VIC 3000
+            </p>
+          </div>
+
+          <div className="md:col-span-3">
+            <p className="eyebrow mb-6 text-background/50">Follow</p>
+            <div className="flex gap-4">
+              <a href="#" aria-label="Instagram" className="text-background/70 hover:text-accent">
+                <Instagram strokeWidth={1} className="h-5 w-5" />
+              </a>
+              <a href="#" aria-label="Facebook" className="text-background/70 hover:text-accent">
+                <Facebook strokeWidth={1} className="h-5 w-5" />
+              </a>
+              <a href="#" aria-label="LinkedIn" className="text-background/70 hover:text-accent">
+                <Linkedin strokeWidth={1} className="h-5 w-5" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-background/10 pt-8 text-xs text-background/50 md:flex-row md:items-center">
+          <span>© {new Date().getFullYear()} Deol Build Pty Ltd. All rights reserved.</span>
+          <span>Builders Licence · VIC / NSW / SA / WA</span>
+        </div>
+      </div>
+    </footer>
   );
 }
