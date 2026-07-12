@@ -11,6 +11,16 @@ import {
   Instagram,
   Facebook,
   Linkedin,
+  HeartHandshake,
+  Wallet,
+  Gem,
+  TrendingUp,
+  Ear,
+  PenTool,
+  Calculator,
+  Hammer,
+  ShieldCheck,
+  KeyRound,
 } from "lucide-react";
 
 import heroPoster from "@/assets/hero-poster.jpg";
