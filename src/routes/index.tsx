@@ -11,10 +11,6 @@ import {
   Instagram,
   Facebook,
   Linkedin,
-  HeartHandshake,
-  Wallet,
-  Gem,
-  TrendingUp,
   Ear,
   PenTool,
   Calculator,
@@ -332,46 +328,64 @@ function Stats() {
 /* ---------------- Philosophy ---------------- */
 
 function Philosophy() {
-  const pillars = [
-    { Icon: HeartHandshake, t: "Client first" },
-    { Icon: Wallet, t: "Budget honest" },
-    { Icon: Gem, t: "Quality obsessed" },
-    { Icon: TrendingUp, t: "Always better" },
+  const horizon = [
+    { y: "2010", t: "Founded as Punjab Homes — one crew, one ute, one promise." },
+    { y: "2018", t: "250 homes in. A reputation built on referrals, not billboards." },
+    { y: "2025", t: "Rebuilt as Deol Build — same hands, sharper standard." },
+    { y: "2030", t: "A thousand honest homes across Australia. Zero shortcuts taken." },
   ];
   return (
     <section id="philosophy" className="bg-background">
       <div className="mx-auto max-w-[1400px] px-6 py-24 md:px-10 md:py-40">
-        <div className="mb-16 max-w-3xl md:mb-24">
-          <p className="eyebrow mb-6">Our Philosophy</p>
-          <h2 className="font-display text-4xl leading-tight md:text-6xl">
-            Built around<br />the people who<br />live inside.
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-12">
+        <div className="grid grid-cols-1 gap-16 md:grid-cols-12 md:gap-20">
+          {/* Left: vision */}
           <div className="md:col-span-7">
+            <p className="eyebrow mb-8">Our Philosophy</p>
+            <h2 className="font-display text-4xl leading-[1.05] md:text-[5.25rem] md:leading-[0.98]">
+              We are not<br />
+              chasing the<br />
+              <em className="not-italic text-accent">next project.</em>
+            </h2>
+            <div className="hairline mt-12 w-16 md:mt-16" />
+            <p className="mt-10 max-w-xl font-display text-2xl leading-snug text-ink-soft md:text-3xl">
+              We are building a company our grandchildren will still be proud to
+              put their name on — one honest home at a time.
+            </p>
+            <p className="mt-8 max-w-xl text-base font-light leading-relaxed text-ink-mute md:text-lg">
+              Fifteen years taught us that a home outlasts a trend, a budget,
+              and a builder's memory. So we build for the decade after handover,
+              not the day of it.
+            </p>
+          </div>
+
+          {/* Right: image + horizon */}
+          <div className="md:col-span-5">
             <div className="overflow-hidden rounded-sm">
               <img
                 src={philosophyImg}
-                alt="Deol Build team on site"
+                alt="A Deol Build home, twenty years on"
                 loading="lazy"
-                className="h-[420px] w-full object-cover md:h-[620px]"
+                className="h-[360px] w-full object-cover md:h-[440px]"
               />
             </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-px overflow-hidden bg-line md:col-span-5">
-            {pillars.map(({ Icon, t }) => (
-              <div
-                key={t}
-                className="flex aspect-square flex-col justify-between bg-background p-6 md:p-8"
-              >
-                <Icon strokeWidth={1} className="h-8 w-8 text-accent md:h-10 md:w-10" />
-                <h3 className="font-display text-xl leading-tight md:text-2xl">
-                  {t}
-                </h3>
-              </div>
-            ))}
+            <p className="eyebrow mt-10 mb-6">The Long View</p>
+            <ol className="flex flex-col">
+              {horizon.map((h, i) => (
+                <li
+                  key={h.y}
+                  className={`grid grid-cols-[auto_1fr] items-baseline gap-6 py-5 ${
+                    i !== horizon.length - 1 ? "border-b border-line" : ""
+                  }`}
+                >
+                  <span className="num-tabular font-display text-xl text-ink md:text-2xl">
+                    {h.y}
+                  </span>
+                  <span className="text-sm font-light leading-relaxed text-ink-soft md:text-base">
+                    {h.t}
+                  </span>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </div>
