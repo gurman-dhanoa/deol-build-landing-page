@@ -170,12 +170,12 @@ function MenuOverlay({
         onClick={onClose}
       />
       <div
-        className={`relative h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        className={`relative h-full w-full overflow-y-auto transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           open ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <div className="mx-auto flex h-full max-w-[1400px] flex-col px-6 md:px-10">
-          <div className="flex items-center justify-between py-5">
+        <div className="mx-auto flex min-h-full max-w-[1400px] flex-col px-6 md:px-10">
+          <div className="sticky top-0 z-10 flex items-center justify-between bg-background/95 py-5 backdrop-blur">
             <Wordmark />
             <button
               onClick={onClose}
@@ -186,21 +186,21 @@ function MenuOverlay({
             </button>
           </div>
 
-          <div className="mt-6 grid flex-1 grid-cols-1 gap-16 pb-16 md:grid-cols-[1fr_1fr] md:pb-24">
-            <nav className="flex flex-col justify-center">
-              <p className="eyebrow mb-8">Navigate</p>
-              <ul className="flex flex-col gap-2">
+          <div className="mt-4 grid flex-1 grid-cols-1 gap-12 pb-16 md:mt-6 md:grid-cols-[1fr_1fr] md:gap-16 md:pb-24">
+            <nav className="flex flex-col md:justify-center">
+              <p className="eyebrow mb-6">Navigate</p>
+              <ul className="flex flex-col">
                 {NAV.map((item, i) => (
                   <li key={item.label}>
                     <a
                       href={item.href}
                       onClick={onClose}
-                      className="group flex items-baseline gap-6 py-2"
+                      className="group flex items-baseline gap-5 py-1.5 md:gap-6 md:py-2"
                     >
-                      <span className="w-10 num-tabular text-xs text-ink-mute">
+                      <span className="w-8 num-tabular text-[0.7rem] text-ink-mute md:w-10 md:text-xs">
                         {String(i + 1).padStart(2, "0")}
                       </span>
-                      <span className="font-display text-4xl leading-none text-ink transition-all group-hover:translate-x-2 group-hover:text-accent md:text-6xl">
+                      <span className="font-display text-[2rem] leading-tight text-ink transition-all group-hover:translate-x-2 group-hover:text-accent md:text-6xl md:leading-none">
                         {item.label}
                       </span>
                     </a>
@@ -209,9 +209,9 @@ function MenuOverlay({
               </ul>
             </nav>
 
-            <div className="hidden flex-col justify-end gap-8 md:flex">
+            <div className="flex flex-col justify-end gap-6 md:gap-8">
               <div className="hairline" />
-              <div className="grid grid-cols-2 gap-8 text-sm">
+              <div className="grid grid-cols-2 gap-6 text-sm md:gap-8">
                 <div>
                   <p className="eyebrow mb-3">Studio</p>
                   <p className="text-ink-soft">
