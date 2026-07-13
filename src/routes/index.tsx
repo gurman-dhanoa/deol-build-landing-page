@@ -40,39 +40,9 @@ export const Route = createFileRoute("/")({
   component: Landing,
 });
 
-const NAV = [
-  { label: "Home", href: "#top" },
-  { label: "Philosophy", href: "#philosophy" },
-  { label: "Process", href: "#process" },
-  { label: "Services", href: "#services" },
-  { label: "Projects", href: "#projects" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Contact", href: "#contact" },
-];
-
-function Wordmark({ className = "" }: { className?: string }) {
-  return (
-    <div className={`flex items-baseline gap-2 ${className}`}>
-      <span className="font-display text-xl tracking-tight">Deol</span>
-      <span className="h-1 w-1 rounded-full bg-accent" />
-      <span className="font-sans text-[0.7rem] uppercase tracking-[0.28em] text-ink-soft">
-        Build
-      </span>
-    </div>
-  );
-}
-
 function Landing() {
-  const [scrolled, setScrolled] = useState(false);
+  const scrolled = useScrolled(80);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -80,6 +50,7 @@ function Landing() {
       document.body.style.overflow = "";
     };
   }, [menuOpen]);
+
 
   return (
     <div id="top" className="bg-background text-foreground">
