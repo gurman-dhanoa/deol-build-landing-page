@@ -397,53 +397,93 @@ function Philosophy() {
 
 function Process() {
   const steps = [
-    { n: "01", Icon: Ear, t: "Listen" },
-    { n: "02", Icon: PenTool, t: "Design" },
-    { n: "03", Icon: Calculator, t: "Price" },
-    { n: "04", Icon: Hammer, t: "Build" },
-    { n: "05", Icon: ShieldCheck, t: "Inspect" },
-    { n: "06", Icon: KeyRound, t: "Handover" },
+    { n: "01", Icon: Ear, t: "Listen", d: "Site walk, brief and budget alignment before a single line is drawn.", chk: "Written brief signed off" },
+    { n: "02", Icon: PenTool, t: "Design", d: "Architect-led design with orientation, materials and detailing resolved.", chk: "Fixed drawing set" },
+    { n: "03", Icon: Calculator, t: "Price", d: "Line-item transparent pricing. No allowances that quietly balloon later.", chk: "Locked fixed-price contract" },
+    { n: "04", Icon: Hammer, t: "Build", d: "One dedicated site supervisor. Trades we have used for a decade.", chk: "Weekly progress report" },
+    { n: "05", Icon: ShieldCheck, t: "Inspect", d: "Independent inspections at frame, lock-up, waterproofing and finish.", chk: "4 third-party sign-offs" },
+    { n: "06", Icon: KeyRound, t: "Handover", d: "Keys, warranties, a walk-through and a builder on call for 10 years.", chk: "10-year structural warranty" },
   ];
   return (
     <section id="process" className="bg-surface-2">
       <div className="mx-auto max-w-[1400px] px-6 py-24 md:px-10 md:py-40">
-        <div className="mb-16 flex flex-col gap-6 md:mb-24 md:flex-row md:items-end md:justify-between">
-          <div>
+        <div className="mb-16 grid gap-10 md:mb-24 md:grid-cols-12 md:items-end">
+          <div className="md:col-span-8">
             <p className="eyebrow mb-6">The Process</p>
-            <h2 className="font-display text-4xl leading-tight md:text-6xl">
-              Six stages.<br />One standard.
+            <h2 className="font-display text-4xl leading-[1.05] md:text-6xl">
+              Six stages.<br />
+              <span className="text-ink-mute">One standard.</span>
             </h2>
           </div>
+          <p className="max-w-sm text-sm leading-relaxed text-ink-soft md:col-span-4 md:text-base">
+            Every home moves through the same six checkpoints — the same way, in the same order, for the last fifteen years.
+          </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-px overflow-hidden bg-line md:grid-cols-3 md:grid-cols-6">
-          {steps.map(({ n, Icon, t }) => (
-            <div
-              key={n}
-              className="group flex aspect-square flex-col justify-between bg-surface-2 p-6 transition hover:bg-background md:p-8"
-            >
-              <span className="num-tabular text-xs text-ink-mute">{n}</span>
-              <Icon
-                strokeWidth={1}
-                className="h-10 w-10 self-center text-ink transition group-hover:text-accent md:h-14 md:w-14"
-              />
-              <h3 className="font-display text-lg md:text-xl">{t}</h3>
+        <div className="grid gap-16 md:grid-cols-12 md:gap-20">
+          {/* Sticky visual column */}
+          <div className="md:col-span-5">
+            <div className="md:sticky md:top-28">
+              <div className="relative overflow-hidden rounded-sm">
+                <img
+                  src={craftHands}
+                  alt="Craftsman laying timber flooring"
+                  loading="lazy"
+                  className="h-[420px] w-full object-cover md:h-[640px]"
+                />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/60 to-transparent p-6 md:p-8">
+                  <p className="eyebrow mb-2 text-background/80">Quality, in practice</p>
+                  <p className="font-display text-xl leading-snug text-background md:text-2xl">
+                    Nothing gets covered up until it has been signed off.
+                  </p>
+                </div>
+              </div>
+              <div className="mt-6 flex items-center justify-between border-t border-line pt-6 text-xs uppercase tracking-[0.22em] text-ink-mute">
+                <span>Stage 01 → 06</span>
+                <span className="num-tabular">10–14 mo avg</span>
+              </div>
             </div>
-          ))}
-        </div>
+          </div>
 
-        <div className="mt-16 overflow-hidden rounded-sm md:mt-24">
-          <img
-            src={craftHands}
-            alt="Craftsman laying timber flooring"
-            loading="lazy"
-            className="h-[320px] w-full object-cover md:h-[560px]"
-          />
+          {/* Timeline column */}
+          <ol className="relative md:col-span-7">
+            <span
+              aria-hidden
+              className="pointer-events-none absolute left-[11px] top-2 bottom-2 w-px bg-line md:left-[14px]"
+            />
+            {steps.map(({ n, Icon, t, d, chk }, i) => (
+              <li key={n} className="group relative pl-12 md:pl-20">
+                <span className="absolute left-0 top-1 flex h-6 w-6 items-center justify-center rounded-full border border-line bg-background md:h-8 md:w-8">
+                  <Icon strokeWidth={1} className="h-3.5 w-3.5 text-ink md:h-4 md:w-4" />
+                </span>
+                <div
+                  className={`flex flex-col gap-4 pb-12 md:pb-16 ${
+                    i !== steps.length - 1 ? "border-b border-line/70" : ""
+                  }`}
+                >
+                  <div className="flex items-baseline gap-6">
+                    <span className="num-tabular text-xs text-ink-mute">{n}</span>
+                    <h3 className="font-display text-3xl leading-none md:text-5xl">
+                      {t}
+                    </h3>
+                  </div>
+                  <p className="max-w-lg text-base leading-relaxed text-ink-soft md:text-lg">
+                    {d}
+                  </p>
+                  <div className="flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-accent">
+                    <ShieldCheck strokeWidth={1} className="h-4 w-4" />
+                    <span>{chk}</span>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>
   );
 }
+
 
 /* ---------------- Services ---------------- */
 
