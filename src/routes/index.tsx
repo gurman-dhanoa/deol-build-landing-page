@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
 import {
   Plus,
   ArrowUpRight,
@@ -8,9 +7,6 @@ import {
   Mail,
   Phone,
   MapPin,
-  Instagram,
-  Facebook,
-  Linkedin,
   Ear,
   PenTool,
   Calculator,
@@ -18,6 +14,14 @@ import {
   ShieldCheck,
   KeyRound,
 } from "lucide-react";
+import {
+  FloatingHeader,
+  MenuOverlay,
+  Footer,
+  useScrolled,
+} from "@/components/site/chrome";
+import { useState } from "react";
+
 
 import heroPoster from "@/assets/hero-poster.jpg";
 import project1 from "@/assets/project-1.jpg";
