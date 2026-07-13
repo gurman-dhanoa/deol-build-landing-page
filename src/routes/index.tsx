@@ -20,7 +20,7 @@ import {
   Footer,
   useScrolled,
 } from "@/components/site/chrome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 import heroPoster from "@/assets/hero-poster.jpg";
