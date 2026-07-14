@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpRight, MapPin, Calendar, ChevronDown, X, SlidersHorizontal } from "lucide-react";
 import {
@@ -7,6 +7,7 @@ import {
   Footer,
   useScrolled,
 } from "@/components/site/chrome";
+import { PROJECTS, type Project } from "@/lib/projects";
 
 import project1 from "@/assets/project-1.jpg";
 import project2 from "@/assets/project-2.jpg";
