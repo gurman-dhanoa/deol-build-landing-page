@@ -10,9 +10,7 @@ import {
 import { PROJECTS, type Project } from "@/lib/projects";
 
 import project1 from "@/assets/project-1.jpg";
-import project2 from "@/assets/project-2.jpg";
 import project3 from "@/assets/project-3.jpg";
-import project4 from "@/assets/project-4.jpg";
 import craftHands from "@/assets/craft-hands.jpg";
 
 export const Route = createFileRoute("/projects")({
@@ -34,45 +32,6 @@ export const Route = createFileRoute("/projects")({
   }),
   component: ProjectsPage,
 });
-
-type ProjectType =
-  | "House"
-  | "Duplex"
-  | "Townhouse"
-  | "Apartment"
-  | "Renovation"
-  | "Knockdown Rebuild";
-
-type ProjectLocation =
-  | "North Canberra"
-  | "South Canberra"
-  | "Inner South"
-  | "Gungahlin"
-  | "Belconnen"
-  | "Woden Valley"
-  | "Tuggeranong"
-  | "Molonglo Valley";
-
-type Project = {
-  id: string;
-  title: string;
-  suburb: string;
-  location: ProjectLocation;
-  type: ProjectType;
-  year: number;
-  img: string;
-};
-
-const PROJECTS: Project[] = [
-  { id: "p01", title: "Braddon Courtyard House", suburb: "Braddon", location: "North Canberra", type: "House", year: 2025, img: project1 },
-  { id: "p02", title: "Yarralumla Duplex", suburb: "Yarralumla", location: "Inner South", type: "Duplex", year: 2024, img: project2 },
-  { id: "p03", title: "Gungahlin Family Rebuild", suburb: "Amaroo", location: "Gungahlin", type: "Knockdown Rebuild", year: 2024, img: project3 },
-  { id: "p04", title: "Deakin Heritage Renovation", suburb: "Deakin", location: "South Canberra", type: "Renovation", year: 2024, img: project4 },
-  { id: "p05", title: "Coombs Terrace Townhouses", suburb: "Coombs", location: "Molonglo Valley", type: "Townhouse", year: 2023, img: project2 },
-  { id: "p06", title: "Kingston Foreshore Apartment", suburb: "Kingston", location: "Inner South", type: "Apartment", year: 2023, img: project1 },
-  { id: "p07", title: "Weston Ridge House", suburb: "Weston", location: "Woden Valley", type: "House", year: 2023, img: project3 },
-  { id: "p08", title: "Belconnen Corner Duplex", suburb: "Cook", location: "Belconnen", type: "Duplex", year: 2022, img: project4 },
-  { id: "p09", title: "Wanniassa Family Home", suburb: "Wanniassa", location: "Tuggeranong", type: "House", year: 2022, img: project1 },
   { id: "p10", title: "Ainslie Cottage Extension", suburb: "Ainslie", location: "North Canberra", type: "Renovation", year: 2022, img: project2 },
   { id: "p11", title: "Forde Street Townhomes", suburb: "Forde", location: "Gungahlin", type: "Townhouse", year: 2021, img: project3 },
   { id: "p12", title: "Red Hill Escarpment House", suburb: "Red Hill", location: "South Canberra", type: "House", year: 2021, img: project4 },
