@@ -446,8 +446,10 @@ function FilterDropdown({
 
 function ProjectCard({ p, index }: { p: Project; index: number }) {
   return (
-    <figure
-      className="group animate-reveal"
+    <Link
+      to="/projects/$slug"
+      params={{ slug: p.slug }}
+      className="group block animate-reveal"
       style={{ animationDelay: `${Math.min(index, 6) * 60}ms` }}
     >
       <div className="relative overflow-hidden rounded-sm bg-surface-2">
@@ -465,10 +467,13 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
         <span className="num-tabular absolute right-4 top-4 rounded-full bg-ink/85 px-3 py-1 text-[0.7rem] text-background backdrop-blur">
           {p.year}
         </span>
+        <span className="absolute bottom-4 right-4 flex h-9 w-9 translate-y-2 items-center justify-center rounded-full bg-background/90 text-ink opacity-0 backdrop-blur transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+          <ArrowUpRight strokeWidth={1} className="h-4 w-4" />
+        </span>
       </div>
-      <figcaption className="mt-5 flex items-start justify-between gap-4">
+      <div className="mt-5 flex items-start justify-between gap-4">
         <div>
-          <h3 className="font-display text-xl leading-tight md:text-2xl">
+          <h3 className="font-display text-xl leading-tight transition group-hover:text-accent md:text-2xl">
             {p.title}
           </h3>
           <p className="mt-2 flex items-center gap-1.5 text-xs uppercase tracking-[0.18em] text-ink-mute">
@@ -480,7 +485,8 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
           <Calendar strokeWidth={1} className="h-3.5 w-3.5" />
           <span className="num-tabular">{p.year}</span>
         </span>
-      </figcaption>
-    </figure>
+      </div>
+    </Link>
   );
 }
+
