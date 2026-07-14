@@ -32,10 +32,6 @@ export const Route = createFileRoute("/projects")({
   }),
   component: ProjectsPage,
 });
-  { id: "p10", title: "Ainslie Cottage Extension", suburb: "Ainslie", location: "North Canberra", type: "Renovation", year: 2022, img: project2 },
-  { id: "p11", title: "Forde Street Townhomes", suburb: "Forde", location: "Gungahlin", type: "Townhouse", year: 2021, img: project3 },
-  { id: "p12", title: "Red Hill Escarpment House", suburb: "Red Hill", location: "South Canberra", type: "House", year: 2021, img: project4 },
-];
 
 const TYPES = ["All", "House", "Duplex", "Townhouse", "Apartment", "Renovation", "Knockdown Rebuild"] as const;
 const LOCATIONS = [
