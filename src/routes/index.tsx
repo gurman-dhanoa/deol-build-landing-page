@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { PROJECTS } from "@/lib/projects";
 import {
   Plus,
   ArrowUpRight,
@@ -382,12 +383,14 @@ function Services() {
 /* ---------------- Projects ---------------- */
 
 function Projects() {
-  const items = [
-    { img: project1, t: "Byron Ridge House", loc: "Byron Bay, NSW", y: "2024", ratio: "aspect-[4/5]" },
-    { img: project2, t: "Fitzroy Kitchen", loc: "Melbourne, VIC", y: "2024", ratio: "aspect-[5/4]" },
-    { img: project3, t: "Spiral Residence", loc: "Adelaide Hills, SA", y: "2023", ratio: "aspect-[4/5]" },
-    { img: project4, t: "Bushland Pavilion", loc: "Perth, WA", y: "2023", ratio: "aspect-[16/10]" },
+  const items = PROJECTS.slice(0, 4);
+  const spans = [
+    "md:col-span-6",
+    "md:col-span-5 md:col-start-8 md:mt-32",
+    "md:col-span-5",
+    "md:col-span-7 md:col-start-6",
   ];
+  const ratios = ["aspect-[4/5]", "aspect-[5/4]", "aspect-[4/5]", "aspect-[16/10]"];
   return (
     <section id="projects" className="bg-background">
       <div className="mx-auto max-w-[1400px] px-6 py-24 md:px-10 md:py-40">
@@ -399,46 +402,42 @@ function Projects() {
             </h2>
           </div>
           <div className="flex items-end md:col-span-4 md:justify-end">
-            <a
-              href="#contact"
+            <Link
+              to="/projects"
               className="inline-flex items-center gap-3 text-sm uppercase tracking-[0.24em] text-ink hover:text-accent"
             >
               All projects
               <ArrowUpRight strokeWidth={1} className="h-5 w-5" />
-            </a>
+            </Link>
           </div>
         </div>
 
         <div className="grid grid-cols-1 gap-x-8 gap-y-20 md:grid-cols-12">
           {items.map((p, i) => (
-            <figure
-              key={p.t}
-              className={`${
-                i === 0
-                  ? "md:col-span-6"
-                  : i === 1
-                  ? "md:col-span-5 md:col-start-8 md:mt-32"
-                  : i === 2
-                  ? "md:col-span-5"
-                  : "md:col-span-7 md:col-start-6"
-              }`}
+            <Link
+              key={p.id}
+              to="/projects/$slug"
+              params={{ slug: p.slug }}
+              className={`group block ${spans[i]}`}
             >
-              <div className={`overflow-hidden rounded-sm ${p.ratio}`}>
-                <img
-                  src={p.img}
-                  alt={p.t}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition duration-[1200ms] hover:scale-[1.03]"
-                />
-              </div>
-              <figcaption className="mt-6 flex items-baseline justify-between gap-4">
-                <div>
-                  <h3 className="font-display text-2xl">{p.t}</h3>
-                  <p className="mt-1 text-sm text-ink-mute">{p.loc}</p>
+              <figure>
+                <div className={`overflow-hidden rounded-sm ${ratios[i]}`}>
+                  <img
+                    src={p.img}
+                    alt={p.title}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition duration-[1200ms] group-hover:scale-[1.03]"
+                  />
                 </div>
-                <span className="num-tabular text-xs text-ink-mute">{p.y}</span>
-              </figcaption>
-            </figure>
+                <figcaption className="mt-6 flex items-baseline justify-between gap-4">
+                  <div>
+                    <h3 className="font-display text-2xl transition group-hover:text-accent">{p.title}</h3>
+                    <p className="mt-1 text-sm text-ink-mute">{p.suburb} · {p.location}</p>
+                  </div>
+                  <span className="num-tabular text-xs text-ink-mute">{p.year}</span>
+                </figcaption>
+              </figure>
+            </Link>
           ))}
         </div>
       </div>
