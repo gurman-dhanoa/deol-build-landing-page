@@ -10,7 +10,7 @@ export const NAV = [
   { label: "Projects", href: "/projects" },
   { label: "Testimonials", href: "/#testimonials" },
   { label: "FAQ", href: "/#faq" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export function Wordmark({ className = "" }: { className?: string }) {
