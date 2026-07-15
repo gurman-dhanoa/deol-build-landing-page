@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { PROJECTS } from "@/lib/projects";
 import {
   Plus,
   ArrowUpRight,
