@@ -13,7 +13,7 @@ import project1 from "@/assets/project-1.jpg";
 import project3 from "@/assets/project-3.jpg";
 import craftHands from "@/assets/craft-hands.jpg";
 
-export const Route = createFileRoute("/projects")({
+export const Route = createFileRoute("/projects/")({
   head: () => ({
     meta: [
       { title: "Projects — Deol Build" },
