@@ -332,7 +332,7 @@ function Process() {
 function Services() {
   const services = [
     { n: "01", t: "Custom Homes", d: "One-off residences designed and delivered end-to-end.", to: "/services/custom-homes" as const },
-    { n: "02", t: "Knockdown Rebuild", d: "Replace what no longer serves — keep the postcode you love." },
+    { n: "02", t: "Knockdown Rebuild", d: "Replace what no longer serves — keep the postcode you love.", to: "/services/knockdown-rebuild" as const },
     { n: "03", t: "Major Renovations", d: "Structural extensions, second storeys, whole-home reworks." },
     { n: "04", t: "Luxury Multi-Res", d: "Duplexes and small-scale developments with private-home finish." },
   ];
