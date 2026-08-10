@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
+import { Route as ServicesKnockdownRebuildRouteImport } from './routes/services.knockdown-rebuild'
 import { Route as ServicesCustomHomesRouteImport } from './routes/services.custom-homes'
 import { Route as ProjectsSlugRouteImport } from './routes/projects.$slug'
 
@@ -30,6 +31,12 @@ const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
   path: '/projects/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesKnockdownRebuildRoute =
+  ServicesKnockdownRebuildRouteImport.update({
+    id: '/services/knockdown-rebuild',
+    path: '/services/knockdown-rebuild',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ServicesCustomHomesRoute = ServicesCustomHomesRouteImport.update({
   id: '/services/custom-homes',
   path: '/services/custom-homes',
@@ -46,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/services/custom-homes': typeof ServicesCustomHomesRoute
+  '/services/knockdown-rebuild': typeof ServicesKnockdownRebuildRoute
   '/projects/': typeof ProjectsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +61,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/services/custom-homes': typeof ServicesCustomHomesRoute
+  '/services/knockdown-rebuild': typeof ServicesKnockdownRebuildRoute
   '/projects': typeof ProjectsIndexRoute
 }
 export interface FileRoutesById {
@@ -61,6 +70,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/services/custom-homes': typeof ServicesCustomHomesRoute
+  '/services/knockdown-rebuild': typeof ServicesKnockdownRebuildRoute
   '/projects/': typeof ProjectsIndexRoute
 }
 export interface FileRouteTypes {
@@ -70,6 +80,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/projects/$slug'
     | '/services/custom-homes'
+    | '/services/knockdown-rebuild'
     | '/projects/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -77,6 +88,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/projects/$slug'
     | '/services/custom-homes'
+    | '/services/knockdown-rebuild'
     | '/projects'
   id:
     | '__root__'
@@ -84,6 +96,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/projects/$slug'
     | '/services/custom-homes'
+    | '/services/knockdown-rebuild'
     | '/projects/'
   fileRoutesById: FileRoutesById
 }
@@ -92,6 +105,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   ProjectsSlugRoute: typeof ProjectsSlugRoute
   ServicesCustomHomesRoute: typeof ServicesCustomHomesRoute
+  ServicesKnockdownRebuildRoute: typeof ServicesKnockdownRebuildRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
 }
 
@@ -118,6 +132,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services/knockdown-rebuild': {
+      id: '/services/knockdown-rebuild'
+      path: '/services/knockdown-rebuild'
+      fullPath: '/services/knockdown-rebuild'
+      preLoaderRoute: typeof ServicesKnockdownRebuildRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services/custom-homes': {
       id: '/services/custom-homes'
       path: '/services/custom-homes'
@@ -140,6 +161,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   ProjectsSlugRoute: ProjectsSlugRoute,
   ServicesCustomHomesRoute: ServicesCustomHomesRoute,
+  ServicesKnockdownRebuildRoute: ServicesKnockdownRebuildRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
 }
 export const routeTree = rootRouteImport
