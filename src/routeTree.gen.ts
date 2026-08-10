@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
+import { Route as ServicesCustomHomesRouteImport } from './routes/services.custom-homes'
 import { Route as ProjectsSlugRouteImport } from './routes/projects.$slug'
 
 const ContactRoute = ContactRouteImport.update({
@@ -29,6 +30,11 @@ const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
   path: '/projects/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesCustomHomesRoute = ServicesCustomHomesRouteImport.update({
+  id: '/services/custom-homes',
+  path: '/services/custom-homes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectsSlugRoute = ProjectsSlugRouteImport.update({
   id: '/projects/$slug',
   path: '/projects/$slug',
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/projects/$slug': typeof ProjectsSlugRoute
+  '/services/custom-homes': typeof ServicesCustomHomesRoute
   '/projects/': typeof ProjectsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/projects/$slug': typeof ProjectsSlugRoute
+  '/services/custom-homes': typeof ServicesCustomHomesRoute
   '/projects': typeof ProjectsIndexRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,38 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/projects/$slug': typeof ProjectsSlugRoute
+  '/services/custom-homes': typeof ServicesCustomHomesRoute
   '/projects/': typeof ProjectsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/contact' | '/projects/$slug' | '/projects/'
+  fullPaths:
+    | '/'
+    | '/contact'
+    | '/projects/$slug'
+    | '/services/custom-homes'
+    | '/projects/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contact' | '/projects/$slug' | '/projects'
-  id: '__root__' | '/' | '/contact' | '/projects/$slug' | '/projects/'
+  to:
+    | '/'
+    | '/contact'
+    | '/projects/$slug'
+    | '/services/custom-homes'
+    | '/projects'
+  id:
+    | '__root__'
+    | '/'
+    | '/contact'
+    | '/projects/$slug'
+    | '/services/custom-homes'
+    | '/projects/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContactRoute: typeof ContactRoute
   ProjectsSlugRoute: typeof ProjectsSlugRoute
+  ServicesCustomHomesRoute: typeof ServicesCustomHomesRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
 }
 
@@ -92,6 +118,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services/custom-homes': {
+      id: '/services/custom-homes'
+      path: '/services/custom-homes'
+      fullPath: '/services/custom-homes'
+      preLoaderRoute: typeof ServicesCustomHomesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/projects/$slug': {
       id: '/projects/$slug'
       path: '/projects/$slug'
@@ -106,18 +139,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactRoute: ContactRoute,
   ProjectsSlugRoute: ProjectsSlugRoute,
+  ServicesCustomHomesRoute: ServicesCustomHomesRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

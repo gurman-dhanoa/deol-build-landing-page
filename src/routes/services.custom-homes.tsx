@@ -278,7 +278,7 @@ function CustomHomesPage() {
               >
                 <div className="overflow-hidden">
                   <img
-                    src={p.image}
+                    src={p.img}
                     alt={p.title}
                     loading="lazy"
                     className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-105"
