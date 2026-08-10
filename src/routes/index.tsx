@@ -331,7 +331,7 @@ function Process() {
 
 function Services() {
   const services = [
-    { n: "01", t: "Custom Homes", d: "One-off residences designed and delivered end-to-end." },
+    { n: "01", t: "Custom Homes", d: "One-off residences designed and delivered end-to-end.", to: "/services/custom-homes" as const },
     { n: "02", t: "Knockdown Rebuild", d: "Replace what no longer serves — keep the postcode you love." },
     { n: "03", t: "Major Renovations", d: "Structural extensions, second storeys, whole-home reworks." },
     { n: "04", t: "Luxury Multi-Res", d: "Duplexes and small-scale developments with private-home finish." },
@@ -356,25 +356,36 @@ function Services() {
         </div>
 
         <div className="grid grid-cols-1 gap-px overflow-hidden bg-line md:grid-cols-2">
-          {services.map((s) => (
-            <div
-              key={s.n}
-              className="group relative flex min-h-[280px] flex-col justify-between bg-surface-3 p-10 transition hover:bg-surface-1 md:p-14"
-            >
-              <span className="num-tabular text-xs text-ink-mute">{s.n}</span>
-              <div>
-                <h3 className="font-display text-3xl md:text-4xl">{s.t}</h3>
-                <p className="mt-4 max-w-sm text-sm font-light text-ink-soft">
-                  {s.d}
-                </p>
-                <div className="mt-8 flex items-center gap-2 text-xs uppercase tracking-[0.24em] text-ink-mute transition group-hover:text-accent">
-                  <span>Learn more</span>
-                  <ArrowRight strokeWidth={1} className="h-4 w-4" />
+          {services.map((s) => {
+            const body = (
+              <>
+                <span className="num-tabular text-xs text-ink-mute">{s.n}</span>
+                <div>
+                  <h3 className="font-display text-3xl md:text-4xl">{s.t}</h3>
+                  <p className="mt-4 max-w-sm text-sm font-light text-ink-soft">
+                    {s.d}
+                  </p>
+                  <div className="mt-8 flex items-center gap-2 text-xs uppercase tracking-[0.24em] text-ink-mute transition group-hover:text-accent">
+                    <span>{s.to ? "Learn more" : "Coming soon"}</span>
+                    <ArrowRight strokeWidth={1} className="h-4 w-4" />
+                  </div>
                 </div>
+              </>
+            );
+            const cls =
+              "group relative flex min-h-[280px] flex-col justify-between bg-surface-3 p-10 transition hover:bg-surface-1 md:p-14";
+            return s.to ? (
+              <Link key={s.n} to={s.to} className={cls}>
+                {body}
+              </Link>
+            ) : (
+              <div key={s.n} className={cls}>
+                {body}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
+
       </div>
     </section>
   );
